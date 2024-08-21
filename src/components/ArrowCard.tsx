@@ -1,17 +1,17 @@
 import { formatDate } from "@lib/utils"
-import type { CollectionEntry } from "astro:content"
-import type Article from "@interfaces/article"
+import type Post from "@interfaces/post"
+import type Project from "@interfaces/project"
 
 type Props = {
   // entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
-  entry: Article
+  entry: Post | Project,
   pill?: boolean,
   collection: string
 }
 
 export default function ArrowCard({entry, pill, collection='blog'}: Props) {
     return (
-      <a href={`/${collection}/${entry.attributes.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-black/5 hover:dark:bg-white/10 border-black/15 dark:border-white/20 transition-colors duration-300 ease-in-out">
+      <a href={`/myself/${collection}/${entry.attributes.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-black/5 hover:dark:bg-white/10 border-black/15 dark:border-white/20 transition-colors duration-300 ease-in-out">
       <div class="w-full group-hover:text-black group-hover:dark:text-white blend">
         <div class="flex flex-wrap items-center gap-2">
           {pill &&
@@ -28,15 +28,15 @@ export default function ArrowCard({entry, pill, collection='blog'}: Props) {
         </div>
 
         <div class="text-sm line-clamp-2">
-          {entry.attributes.summary}
+          {entry.attributes.article.summary}
         </div>
         <ul class="flex flex-wrap mt-2 gap-1">
-          {entry.attributes.tags.data.map((tag) => (
+          {entry.attributes.article.tags.data.map((tag) => (
             <li class="text-xs uppercase py-0.5 px-1 rounded bg-black/5 dark:bg-white/20 text-black/75 dark:text-white/75">
               {tag.attributes.text}
             </li>
           ))}
-          {entry.attributes.stacks.data.map((tag) => (
+          {entry.attributes.article.stacks.data.map((tag) => (
             <li class="text-xs uppercase py-0.5 px-1 rounded bg-black/5 dark:bg-white/20 text-black/75 dark:text-white/75">
               {tag.attributes.name}
             </li>

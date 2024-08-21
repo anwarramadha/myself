@@ -5,31 +5,40 @@ import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import ArticleTopLayout from "@layouts/ArticleTopLayout.astro"
 import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
+import fetchApi from "@lib/strapi"
+import type Post from "@interfaces/post"
+import { generatePrevAndNextPost } from "@lib/post"
 
 // Create the static blog pages
 export async function getStaticPaths() {
-	const posts = await getCollection("blog")
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
+  const posts = await fetchApi<Post[]>({
+    endpoint: `/posts?populate=deep`
+  })
+  return posts.map((post) => ({
+		params: { slug: post.attributes.slug },
+		props: {
+      post,
+      ...generatePrevAndNextPost(posts, post.attributes.slug)
+    },
 	}))
 }
 
 // Get the requested post
-type Props = CollectionEntry<"blog">
-const post = Astro.props
-const { title, summary } = post.data
+const { post, next, prev } = Astro.props
+const { title } = post.attributes
+const { summary } = post.attributes.article
+const collection = "blog"
 ---
 
 <PageLayout title={title} description={summary}>
   <TopLayout>
     <div class="animate">
-      <ArticleTopLayout entry={post}/>
+      <ArticleTopLayout entry={post} collection={collection} />
     </div>
   </TopLayout>
   <BottomLayout>
     <div class="animate">
-      <ArticleBottomLayout entry={post} />
+      <ArticleBottomLayout entry={post} collection={collection} next={next} prev={prev} />
     </div>
   </BottomLayout>
 </PageLayout>

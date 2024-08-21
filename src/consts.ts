@@ -35,19 +35,19 @@ export const SEARCH: Page = {
 export const LINKS: Links = [
   { 
     TEXT: "Home", 
-    HREF: "/", 
+    HREF: "/myself", 
   },
   { 
     TEXT: "Work", 
-    HREF: "/work", 
+    HREF: "/myself/work", 
   },
   { 
     TEXT: "Blog", 
-    HREF: "/blog", 
+    HREF: "/myself/blog", 
   },
   { 
     TEXT: "Projects", 
-    HREF: "/projects", 
+    HREF: "/myself/projects", 
   },
 ]
 

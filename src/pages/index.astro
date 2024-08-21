@@ -9,7 +9,8 @@ import MeteorShower from "@components/MeteorShower.astro"
 import fetchApi from "@lib/strapi"
 import type About from "@interfaces/about"
 import type PortfolioStack from "@interfaces/portfolioStack"
-import type Article from "@interfaces/article"
+import type Post from "@interfaces/post"
+import type Project from "@interfaces/project"
 import { Markdown } from "@astropub/md"
 
 const strapiUrl = import.meta.env.STRAPI_URL
@@ -20,14 +21,12 @@ const about = await fetchApi<About>({
 const portfolioStack = await fetchApi<PortfolioStack>({
   endpoint: "/portfolio-stack?populate=deep"
 })
-const recentArticles = await fetchApi<Article[]>({
-  endpoint: "/articles?_sort=date:desc&_limit=3&populate=tags&populate=stacks"
+const recentPosts = await fetchApi<Post[]>({
+  endpoint: "/posts?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
 })
-
-const posts = (await getCollection("blog"))
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0,3)
+const recentProjects = await fetchApi<Project[]>({
+  endpoint: "/projects?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
+})
 
 const projects = (await getCollection("projects"))
   .filter(project => !project.data.draft)
@@ -119,7 +118,7 @@ const projects = (await getCollection("projects"))
             </a>
           </div>
           <ul class="space-y-4">
-            {recentArticles.map((post) => (
+            {recentPosts.map((post) => (
               <li>
                 <ArrowCard entry={post} collection="blog" />
               </li>
@@ -138,7 +137,7 @@ const projects = (await getCollection("projects"))
             {portfolioStack.attributes.stacks.data.map(item => (
               <StackCard 
                 text={item.attributes.name}
-                icon={`${strapiUrl}${item.attributes.icon.data.attributes.formats.thumbnail.url}`}
+                icon={item.attributes.icon.data.attributes.formats.thumbnail.url}
                 href={item.attributes.url}
               />
             ))}
@@ -160,11 +159,11 @@ const projects = (await getCollection("projects"))
             </a>
           </div>
           <ul class="space-y-4">
-            <!-- {projects.map((project) => (
+            {recentProjects.map((project) => (
               <li>
-                <ArrowCard entry={project} />
+                <ArrowCard entry={project} collection="project" />
               </li>
-            ))} -->
+            ))}
           </ul>
         </div>
       </section>

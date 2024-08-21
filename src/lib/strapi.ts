@@ -46,8 +46,6 @@ interface Props {
     if (wrappedByKey) {
       data = data[wrappedByKey];
     }
-    console.log(data);
-    
   
     if (wrappedByList) {
       data = data[0];
