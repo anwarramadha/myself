@@ -13,8 +13,15 @@ const { attributes } = entry
 const { title, article, createdAt } = attributes
 const { summary } = article
 
-const demoUrl = collection === "projects" ? attributes.demoUrl : null
-const repoUrl = collection === "projects" ? attributes.repositoryUrl : null
+// eslint-disable-next-line
+let demoUrl: string | null = null
+let repoUrl: string | null = null
+if (collection === "projects") {
+  const { attributes } = entry as Project
+  const { demoUrl: d, repositoryUrl: r } = attributes
+  demoUrl = d
+  repoUrl = r
+}
 ---
 
 <div>
