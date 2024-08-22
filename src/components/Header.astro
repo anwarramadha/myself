@@ -1,7 +1,10 @@
 ---
 import { SITE, LINKS } from "@consts"
 import { cn } from "@lib/utils"
-const { pathname } = Astro.url
+let { pathname } = Astro.url
+pathname = pathname.replace(/\/$/, "")
+// remove trailing slash
+// const subpath = pathname.replace(/\/$/, "").split("/").slice(1)
 const subpath = pathname.match(/[^/]+/g)
 import Container from "@components/Container.astro"
 ---

@@ -1,7 +1,7 @@
 ---
-import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 import ArrowCard from "@components/ArrowCard"
+import PortfolioStackCard from "@components/PortfolioStackCard.astro"
 import StackCard from "@components/StackCard.astro"
 import { SITE, SOCIALS } from "@consts"
 import TwinklingStars from "@components/TwinklingStars.astro"
@@ -11,9 +11,8 @@ import type About from "@interfaces/about"
 import type PortfolioStack from "@interfaces/portfolioStack"
 import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
+import type Stack from "@interfaces/stack"
 import { Markdown } from "@astropub/md"
-
-const strapiUrl = import.meta.env.STRAPI_URL
 
 const about = await fetchApi<About>({
   endpoint: "/about-me"
@@ -21,17 +20,22 @@ const about = await fetchApi<About>({
 const portfolioStack = await fetchApi<PortfolioStack>({
   endpoint: "/portfolio-stack?populate=deep"
 })
+type Stacks = [
+  {
+    id: number
+    attributes: Stack
+  }
+]
+const stacks = await fetchApi<Stacks>({
+  endpoint: "/stacks?populate=icon"
+})
+console.log('stacks', stacks)
 const recentPosts = await fetchApi<Post[]>({
   endpoint: "/posts?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
 })
 const recentProjects = await fetchApi<Project[]>({
   endpoint: "/projects?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
 })
-
-const projects = (await getCollection("projects"))
-  .filter(project => !project.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0,3)
 ---
 
 <PageLayout title="Home" description={SITE.DESCRIPTION}>
@@ -82,13 +86,25 @@ const projects = (await getCollection("projects"))
             A Frontend Engineer
           </p>
           <div id="ctaButtons" class='animated flex flex-wrap gap-4 justify-center mt-5'>
-            <a href='/blog' class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
+            <a href='/myself/blog' class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
               Read my blog
             </a>
-            <a href='/work' class='py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend'>
-              View my work
+            <a href='/myself/resume' class='py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend'>
+              View my resume
             </a>
           </div>
+          <section class="animate">
+            <div class="space-y-4">
+              <div class="flex flex-wrap items-center justify-center gap-2 mt-5 max-w-[20rem] md:max-w-[30rem]">
+                {stacks.map(item => (
+                  <StackCard
+                    icon={item.attributes.icon.data?.attributes?.formats?.thumbnail?.url}
+                    href={item.attributes.url}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -135,7 +151,7 @@ const projects = (await getCollection("projects"))
           </p>
           <div class="flex flex-wrap items-center gap-2 mt-5">
             {portfolioStack.attributes.stacks.data.map(item => (
-              <StackCard 
+              <PortfolioStackCard 
                 text={item.attributes.name}
                 icon={item.attributes.icon.data.attributes.formats.thumbnail.url}
                 href={item.attributes.url}
