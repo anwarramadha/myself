@@ -29,7 +29,6 @@ type Stacks = [
 const stacks = await fetchApi<Stacks>({
   endpoint: "/stacks?populate=icon"
 })
-console.log('stacks', stacks)
 const recentPosts = await fetchApi<Post[]>({
   endpoint: "/posts?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
 })
