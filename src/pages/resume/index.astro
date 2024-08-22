@@ -8,7 +8,7 @@ import { Markdown } from "@astropub/md"
 import { RESUME } from "@consts"
 
 const resumes = await fetchApi<Resume[]>({
-  endpoint: "/resumes?_sort=date:desc"
+  endpoint: "/resumes?sort=order:desc"
 })
 
 function formatResumeDate(input: string) {

@@ -3,7 +3,7 @@ import PageLayout from "@layouts/PageLayout.astro"
 import ArrowCard from "@components/ArrowCard"
 import PortfolioStackCard from "@components/PortfolioStackCard.astro"
 import StackCard from "@components/StackCard.astro"
-import { SITE, SOCIALS } from "@consts"
+import { SITE } from "@consts"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import fetchApi from "@lib/strapi"
@@ -12,6 +12,7 @@ import type PortfolioStack from "@interfaces/portfolioStack"
 import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
 import type Stack from "@interfaces/stack"
+import type Social from "@interfaces/social"
 import { Markdown } from "@astropub/md"
 
 const about = await fetchApi<About>({
@@ -34,6 +35,9 @@ const recentPosts = await fetchApi<Post[]>({
 })
 const recentProjects = await fetchApi<Project[]>({
   endpoint: "/projects?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
+})
+const socials = await fetchApi<Social[]>({
+  endpoint: "/socials"
 })
 ---
 
@@ -193,16 +197,16 @@ const recentProjects = await fetchApi<Project[]>({
             Reach out to me via email or on social media.
           </p>
           <div class="grid grid-cols-4 gap-y-2 mt-4 auto-cols-min">
-            {SOCIALS.map(social => (
+            {socials.map(social => (
               <div class="col-span-1 flex items-center gap-1">
                 <span class="whitespace-nowrap truncate">
-                  {social.NAME}
+                  {social.attributes.name}
                 </span>
               </div>
               <div class="col-span-3 truncate">
-                <a href={social.HREF} target="_blank" class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
+                <a href={social.attributes.url} target="_blank" class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
                   <span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
-                    {social.TEXT}
+                    {social.attributes.text}
                   </span>
                 </a>
               </div>
