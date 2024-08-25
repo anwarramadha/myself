@@ -4,10 +4,10 @@ import fs, { link } from 'fs';
 // create printer with Times New Roman font
 const printer = new PdfPrinter({
   Roboto: {
-    normal: 'fonts/Roboto/roboto-regular.ttf',
-    bold: 'fonts/Roboto/roboto-bold.ttf',
-    italics: 'fonts/Roboto/roboto-italic.ttf',
-    bolditalics: 'fonts/Roboto/roboto-bolditalic.ttf'
+    normal: 'fonts/Roboto/Roboto-Regular.ttf',
+    bold: 'fonts/Roboto/Roboto-Bold.ttf',
+    italics: 'fonts/Roboto/Roboto-Italic.ttf',
+    bolditalics: 'fonts/Roboto/Roboto-BoldItalic.ttf'
   }
 });
 
