@@ -79,3 +79,7 @@ export const SOCIALS: Socials = [
   },
 ]
 
+export const POST_TYPE_ENUM = {
+  POST: 'blog',
+  PROJECT: 'projects',
+}

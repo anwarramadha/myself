@@ -13,6 +13,7 @@ import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
 import type Stack from "@interfaces/stack"
 import type Social from "@interfaces/social"
+import { POST_TYPE_ENUM } from "@consts"
 import { Markdown } from "@astropub/md"
 
 const about = await fetchApi<About>({
@@ -139,7 +140,7 @@ const socials = await fetchApi<Social[]>({
           <ul class="space-y-4">
             {recentPosts.map((post) => (
               <li>
-                <ArrowCard entry={post} collection="blog" />
+                <ArrowCard entry={post} collection={POST_TYPE_ENUM.POST} />
               </li>
             ))}
           </ul>
@@ -180,7 +181,7 @@ const socials = await fetchApi<Social[]>({
           <ul class="space-y-4">
             {recentProjects.map((project) => (
               <li>
-                <ArrowCard entry={project} collection="projects" />
+                <ArrowCard entry={project} collection={POST_TYPE_ENUM.PROJECT} />
               </li>
             ))}
           </ul>

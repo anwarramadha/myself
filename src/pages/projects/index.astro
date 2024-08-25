@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
@@ -8,11 +7,17 @@ import fetchApi from "@lib/strapi"
 import type Project from "@interfaces/project"
 import type Tag from "@interfaces/tag"
 import type Stack from "@interfaces/stack"
+import { JsonFile } from "@lib/jsonFile"
+import { POST_TYPE_ENUM } from "@consts"
 import { PROJECTS } from "@consts"
 
 const projects = await fetchApi<Project[]>({
-  endpoint: `/projects?populate=deep`
+  endpoint: `/projects?populate=deep`,
+  additionalFields: [{ name: 'type', value: POST_TYPE_ENUM.PROJECT }]
 })
+
+const jsonFile = new JsonFile('data/projects.json', projects)
+jsonFile.createJsonFileFromObject()
 
 type Tags = [{
   id: number,

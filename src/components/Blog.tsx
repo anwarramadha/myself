@@ -1,6 +1,7 @@
 import { createEffect, createSignal, For } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
 import type Post from "@interfaces/post"
+import { POST_TYPE_ENUM } from "@consts"
 import { cn } from "@lib/utils"
 
 type Props = {
@@ -64,7 +65,7 @@ export default function Blog({ data, tags }: Props) {
           <ul class="flex flex-col gap-3">
             {posts().map((post) => (
               <li>
-                <ArrowCard entry={post} collection="blog" />
+                <ArrowCard entry={post} collection={POST_TYPE_ENUM.POST} />
               </li>
             ))}
           </ul>

@@ -3,6 +3,7 @@ interface Props {
     query?: Record<string, string>;
     wrappedByKey?: string;
     wrappedByList?: boolean;
+    additionalFields?: Array<{name: string, value: string | number}>;
   }
   
   /**
@@ -18,6 +19,7 @@ interface Props {
     query,
     wrappedByKey="data",
     wrappedByList,
+    additionalFields,
   }: Props): Promise<T> {
     if (endpoint.startsWith('/')) {
       endpoint = endpoint.slice(1);
@@ -45,6 +47,17 @@ interface Props {
   
     if (wrappedByKey) {
       data = data[wrappedByKey];
+    }
+
+    if (data instanceof Array && data.length > 0) {
+      data = data.map((item: any) => {
+        if (additionalFields) {
+          additionalFields.forEach((field) => {
+            item[field.name] = field.value;
+          });
+        }
+        return item;
+      });
     }
   
     if (wrappedByList) {

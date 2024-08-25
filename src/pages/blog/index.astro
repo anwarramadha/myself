@@ -7,11 +7,18 @@ import fetchApi from "@lib/strapi"
 import type Post from "@interfaces/post"
 import type Tag from "@interfaces/tag"
 import type Stack from "@interfaces/stack"
+import { JsonFile } from "@lib/jsonFile"
+import { POST_TYPE_ENUM } from "@consts"
 import { BLOG } from "@consts"
 
 const posts = await fetchApi<Post[]>({
-  endpoint: `/posts?populate=deep`
+  endpoint: `/posts?populate=deep`,
+  additionalFields: [{ name: 'type', value: POST_TYPE_ENUM.POST }]
 })
+
+// Create a JSON file from the fetched data to be used for Fuse.js search
+const jsonFile = new JsonFile('data/blog.json', posts)
+jsonFile.createJsonFileFromObject()
 
 type Tags = [{
   id: number,

@@ -2,6 +2,7 @@ import type { CollectionEntry } from "astro:content"
 import { createEffect, createSignal, For } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
 import type Project from "@interfaces/project"
+import { POST_TYPE_ENUM } from "@consts"
 import { cn } from "@lib/utils"
 
 type Props = {
@@ -65,7 +66,7 @@ export default function Projects({ data, tags }: Props) {
           <ul class="flex flex-col gap-3">
             {projects().map((project) => (
               <li>
-                <ArrowCard entry={project} collection="projects" />
+                <ArrowCard entry={project} collection={POST_TYPE_ENUM.PROJECT} />
               </li>
             ))}
           </ul>
