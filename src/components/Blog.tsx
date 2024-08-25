@@ -1,22 +1,26 @@
-import type { CollectionEntry } from "astro:content"
 import { createEffect, createSignal, For } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
+import type Post from "@interfaces/post"
+import { POST_TYPE_ENUM } from "@consts"
 import { cn } from "@lib/utils"
 
 type Props = {
-  tags: string[]
-  data: CollectionEntry<"blog">[]
+  tags: string[],
+  data: Post[]
 }
 
 export default function Blog({ data, tags }: Props) {
   const [filter, setFilter] = createSignal(new Set<string>())
-  const [posts, setPosts] = createSignal<CollectionEntry<"blog">[]>([])
+  const [posts, setPosts] = createSignal<Post[]>([])
 
   createEffect(() => {
-    setPosts(data.filter((entry) => 
+    setPosts(data.filter((entry: Post) => 
       Array.from(filter()).every((value) => 
-        entry.data.tags.some((tag:string) => 
-          tag.toLowerCase() === String(value).toLowerCase()
+        entry.attributes.article.tags.data.some(({ attributes }) => 
+          attributes.text.toLowerCase() === String(value).toLowerCase()
+        ) ||
+        entry.attributes.article.stacks.data.some(({ attributes }) =>
+          attributes.name.toLowerCase() === String(value).toLowerCase()
         )
       )
     ))
@@ -42,8 +46,8 @@ export default function Blog({ data, tags }: Props) {
                 <li>
                   <button onClick={() => toggleTag(tag)} class={cn("w-full px-2 py-1 rounded", "whitespace-nowrap overflow-hidden overflow-ellipsis", "flex gap-2 items-center", "bg-black/5 dark:bg-white/10", "hover:bg-black/10 hover:dark:bg-white/15", "transition-colors duration-300 ease-in-out", filter().has(tag) && "text-black dark:text-white")}>
                     <svg class={cn("size-5 fill-black/50 dark:fill-white/50", "transition-colors duration-300 ease-in-out", filter().has(tag) && "fill-black dark:fill-white")}>
-                      <use href={`/ui.svg#square`} class={cn(!filter().has(tag) ? "block" : "hidden")} />
-                      <use href={`/ui.svg#square-check`} class={cn(filter().has(tag) ? "block" : "hidden")} />
+                      <use href={`/myself/ui.svg#square`} class={cn(!filter().has(tag) ? "block" : "hidden")} />
+                      <use href={`/myself/ui.svg#square-check`} class={cn(filter().has(tag) ? "block" : "hidden")} />
                     </svg>
                     {tag}
                   </button>
@@ -61,7 +65,7 @@ export default function Blog({ data, tags }: Props) {
           <ul class="flex flex-col gap-3">
             {posts().map((post) => (
               <li>
-                <ArrowCard entry={post} />
+                <ArrowCard entry={post} collection={POST_TYPE_ENUM.POST} />
               </li>
             ))}
           </ul>

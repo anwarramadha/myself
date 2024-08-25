@@ -4,15 +4,15 @@ import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import Search from "@components/Search"
+import { JsonFile } from "@lib/jsonFile"
 import { SEARCH } from "@consts"
 
-const posts = (await getCollection("blog"))
-  .filter(post => !post.data.draft)
+// import all json file from data/*.json
+const projects = JsonFile.readJsonFile("data/projects.json")
+const posts = JsonFile.readJsonFile("data/blog.json")
 
-const projects = (await getCollection("projects"))
-  .filter(post => !post.data.draft)
 
-const data = [...posts, ...projects] as CollectionEntry<"blog">[]
+const data = [...posts, ...projects]
 ---
 
 <PageLayout title={SEARCH.TITLE} description={SEARCH.DESCRIPTION}>

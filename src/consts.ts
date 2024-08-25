@@ -8,9 +8,9 @@ export const SITE: Site = {
 }
 
 // Work Page
-export const WORK: Page = {
-  TITLE: "Work",
-  DESCRIPTION: "Places I have worked.",
+export const RESUME: Page = {
+  TITLE: "MY RESUME",
+  DESCRIPTION: "Places I have learned & worked.",
 }
 
 // Blog Page
@@ -35,19 +35,19 @@ export const SEARCH: Page = {
 export const LINKS: Links = [
   { 
     TEXT: "Home", 
-    HREF: "/", 
+    HREF: "/myself", 
   },
   { 
-    TEXT: "Work", 
-    HREF: "/work", 
+    TEXT: "Resume", 
+    HREF: "/myself/resume", 
   },
   { 
     TEXT: "Blog", 
-    HREF: "/blog", 
+    HREF: "/myself/blog", 
   },
   { 
     TEXT: "Projects", 
-    HREF: "/projects", 
+    HREF: "/myself/projects", 
   },
 ]
 
@@ -79,3 +79,7 @@ export const SOCIALS: Socials = [
   },
 ]
 
+export const POST_TYPE_ENUM = {
+  POST: 'blog',
+  PROJECT: 'projects',
+}
