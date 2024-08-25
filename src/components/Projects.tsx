@@ -1,4 +1,3 @@
-import type { CollectionEntry } from "astro:content"
 import { createEffect, createSignal, For } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
 import type Project from "@interfaces/project"
