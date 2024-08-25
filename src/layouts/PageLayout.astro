@@ -4,17 +4,26 @@ import BaseHead from "@components/BaseHead.astro"
 import Header from "@components/Header.astro"
 import Footer from "@components/Footer.astro"
 import Drawer from "@components/Drawer.astro"
+import type siteInfo from "@interfaces/siteInfo"
+import fetchApi from "@lib/strapi"
 const { title, description } = Astro.props
 import { SITE } from "@consts"
+
+const siteInfo = await fetchApi<siteInfo>({
+  endpoint: "/site-info"
+})
+
+const siteTitle = siteInfo?.attributes?.title || SITE.TITLE
+const siteDescription = siteInfo?.attributes?.description || description
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`${title} | ${SITE.TITLE}`} description={description} />
+    <BaseHead title={`${title} | ${siteTitle}`} description={siteDescription} />
   </head>
   <body>
-    <Header />
+    <Header title={siteTitle} />
     <Drawer />
     <main>
       <slot />
