@@ -7,18 +7,35 @@ import { SITE } from "@consts"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import fetchApi from "@lib/strapi"
-import type About from "@interfaces/about"
+import { type IAbout } from "@interfaces/about"
+import { About, Biodata } from "@interfaces/about"
 import type PortfolioStack from "@interfaces/portfolioStack"
 import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
 import type Stack from "@interfaces/stack"
 import type Social from "@interfaces/social"
+import { type IEducation } from "@interfaces/education"
+import { Education } from "@interfaces/education"
 import { POST_TYPE_ENUM } from "@consts"
 import { Markdown } from "@astropub/md"
 
-const about = await fetchApi<About>({
-  endpoint: "/about-me"
+const about = await fetchApi<IAbout>({
+  endpoint: "/about-me?populate=deep"
 })
+
+const aboutInstance = new About('data/about.json', about)
+aboutInstance.createJsonFileFromObject()
+
+const biodata = new Biodata('data/biodata.json', about)
+biodata.createJsonFileFromObject()
+
+const education = await fetchApi<IEducation[]>({
+  endpoint: "/educations?sort=order:desc"
+})
+
+const educationInstance = new Education('data/education.json', education)
+educationInstance.createJsonFileFromObject()
+
 const portfolioStack = await fetchApi<PortfolioStack>({
   endpoint: "/portfolio-stack?populate=deep"
 })
@@ -90,8 +107,8 @@ const socials = await fetchApi<Social[]>({
             {about.attributes.expertise}
           </p>
           <div id="ctaButtons" class='animated flex flex-wrap gap-4 justify-center mt-5'>
-            <a href='/myself/blog' class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
-              Read my blog
+            <a href='/myself/cv.pdf' target="_blank" class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
+              Download my CV
             </a>
             <a href='/myself/resume' class='py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend'>
               View my resume

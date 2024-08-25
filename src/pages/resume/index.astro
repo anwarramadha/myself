@@ -3,13 +3,18 @@ import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import fetchApi from "@lib/strapi"
-import type Resume from "@interfaces/resume"
+import { type IResume, Resume } from "@interfaces/resume"
 import { Markdown } from "@astropub/md"
 import { RESUME } from "@consts"
+import PdfMake from "@lib/pdfMake"
 
-const resumes = await fetchApi<Resume[]>({
+const resumes = await fetchApi<IResume[]>({
   endpoint: "/resumes?sort=order:desc"
 })
+
+const resume = new Resume('data/resume.json', resumes)
+
+resume.createJsonFileFromObject()
 
 function formatResumeDate(input: string) {
   if (!input) return "Present"
