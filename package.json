@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "dev:network": "astro dev --host",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && npm run generate-cv",
     "generate-cv": "node scripts/generate-cv.js",
     "preview": "astro preview",
     "preview:network": "astro dev --host",

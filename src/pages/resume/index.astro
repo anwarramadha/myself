@@ -6,7 +6,6 @@ import fetchApi from "@lib/strapi"
 import { type IResume, Resume } from "@interfaces/resume"
 import { Markdown } from "@astropub/md"
 import { RESUME } from "@consts"
-import PdfMake from "@lib/pdfMake"
 
 const resumes = await fetchApi<IResume[]>({
   endpoint: "/resumes?sort=order:desc"

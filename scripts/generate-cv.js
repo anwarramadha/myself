@@ -81,5 +81,5 @@ const docDefinition = {
 }
 
 var pdfDoc = printer.createPdfKitDocument(docDefinition, {});
-pdfDoc.pipe(fs.createWriteStream('public/cv.pdf'));
+pdfDoc.pipe(fs.createWriteStream('dist/cv.pdf'));
 pdfDoc.end();

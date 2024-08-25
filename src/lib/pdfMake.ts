@@ -1,5 +1,3 @@
-import { JsonFile } from "./jsonFile"
-
 export default class PdfMake {
   static parseMdString2List(data: string): any {
     // parse a markdown string into a list
