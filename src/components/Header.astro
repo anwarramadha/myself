@@ -1,5 +1,5 @@
 ---
-import { SITE, LINKS } from "@consts"
+import { LINKS } from "@consts"
 import { cn } from "@lib/utils"
 let { pathname } = Astro.url
 pathname = pathname.replace(/\/$/, "")
@@ -7,6 +7,12 @@ pathname = pathname.replace(/\/$/, "")
 // const subpath = pathname.replace(/\/$/, "").split("/").slice(1)
 const subpath = pathname.match(/[^/]+/g)
 import Container from "@components/Container.astro"
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
 ---
 
 <header id="header" class="fixed top-0 w-full h-16 z-50 ">
@@ -18,7 +24,7 @@ import Container from "@components/Container.astro"
             <use href="/myself/brand.svg#brand"></use>
           </svg>
           <div>
-            {SITE.TITLE}
+            {title}
           </div>
         </a>
       </div>
@@ -36,7 +42,7 @@ import Container from "@components/Container.astro"
     </div>
 
     <div class="buttons absolute right-0 top-1/2 -translate-y-1/2 flex gap-1">
-      <a href="/myself/search" aria-label={`Search blog posts and projects on ${SITE.TITLE}`} class={cn("hidden md:flex", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-black/5 dark:hover:bg-white/20", "stroke-current hover:stroke-black hover:dark:stroke-white", "border border-black/10 dark:border-white/25", "transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "/search" ? "pointer-events-none bg-black dark:bg-white text-white dark:text-black" : "")}>
+      <a href="/myself/search" aria-label={`Search blog posts and projects on ${title}`} class={cn("hidden md:flex", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-black/5 dark:hover:bg-white/20", "stroke-current hover:stroke-black hover:dark:stroke-white", "border border-black/10 dark:border-white/25", "transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "/search" ? "pointer-events-none bg-black dark:bg-white text-white dark:text-black" : "")}>
         <svg class="size-full">
           <use href="/myself/ui.svg#search"></use>
         </svg>
