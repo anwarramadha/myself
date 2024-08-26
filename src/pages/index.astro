@@ -8,7 +8,7 @@ import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import fetchApi from "@lib/strapi"
 import { type IAbout } from "@interfaces/about"
-import { About, Biodata } from "@interfaces/about"
+import { About, Biodata, Skills } from "@interfaces/about"
 import type PortfolioStack from "@interfaces/portfolioStack"
 import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
@@ -23,11 +23,23 @@ const about = await fetchApi<IAbout>({
   endpoint: "/about-me?populate=deep"
 })
 
+const email = await fetchApi<Social[]>({
+  endpoint: "/socials?filters[name]=Email&filters[name]=email"
+})
+
 const aboutInstance = new About('data/about.json', about)
+
+if (email.length > 0) {
+  about.attributes.email = email[0].attributes.text
+}
+
 aboutInstance.createJsonFileFromObject()
 
 const biodata = new Biodata('data/biodata.json', about)
 biodata.createJsonFileFromObject()
+
+const skills = new Skills('data/skills.json', about)
+skills.createJsonFileFromObject()
 
 const education = await fetchApi<IEducation[]>({
   endpoint: "/educations?sort=order:desc"

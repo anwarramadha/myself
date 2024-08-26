@@ -10,6 +10,8 @@ export interface IAbout {
     photo: Image;
     email: string;
     cv: IFile;
+    portfolioWebsite: string;
+    skills: string;
   };
 }
 
@@ -25,6 +27,18 @@ export class About extends JsonFile {
   }
 }
 
+export class Skills extends JsonFile {
+  constructor(path: string, data: IAbout) {
+    super(path, data)
+  }
+  parseObject2Json(data: IAbout): string[] {
+    const result: string[] = []
+    result.push(data.attributes.skills)
+    result.push("\n")
+    return result
+  }
+}
+
 export class Biodata extends JsonFile {
   constructor(path: string, data: IAbout) {
     super(path, data)
@@ -34,13 +48,31 @@ export class Biodata extends JsonFile {
     result.push({
       text: data.attributes.name,
       bold: true,
-      fontSize: 18,
+      fontSize: 14,
       lineHeight: 1.5,
-      margin: [20, 15, 0, 0]
+      alignment: 'center'
     })
     result.push({
-      text: data.attributes.email,
-      margin: [20, 0, 0, 0]
+      columns: [
+        {
+          text: data.attributes.email,
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        },
+        {
+          text: "•",
+          fontSize: 14,
+          bold: true,
+          alignment: 'center',
+          margin: [10, -2, 10, 0],
+          width: 'auto'
+        },
+        {
+          text: data.attributes.portfolioWebsite,
+          margin: [0, 0, 0, 0],
+          alignment: 'left',
+        }
+      ]
     })
     result.push("\n")
     return result
