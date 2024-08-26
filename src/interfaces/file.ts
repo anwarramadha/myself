@@ -1,7 +1,4 @@
-import type Format from './format';
-import { type IFile } from '../file';
-
-export default interface Image extends IFile {
+export interface IFile {
   data: {
     id: number;
     attributes: {
@@ -20,12 +17,6 @@ export default interface Image extends IFile {
       provider_metadata: string;
       createdAt: string;
       updatedAt: string;
-      formats: {
-        thumbnail: Format;
-        large: Format;
-        medium: Format;
-        small: Format;
-      };
     };
   };
 }

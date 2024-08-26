@@ -1,4 +1,5 @@
 import type Image from "./image/image";
+import { type IFile } from "./file";
 import { JsonFile } from '@lib/jsonFile';
 export interface IAbout {
   attributes: {
@@ -8,6 +9,7 @@ export interface IAbout {
     expertise: string;
     photo: Image;
     email: string;
+    cv: IFile;
   };
 }
 
