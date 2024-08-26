@@ -27,28 +27,29 @@ const Skills = readJsonFile("data/skills.json")
 
 const docDefinition = {
   defaultStyle: {
-    fontSize: 10,
+    fontSize: 9,
+    color: '#7f7f7f',
   },
   content: [
     biodata,
     "\n",
-    { text: 'About Me', bold: true, lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "___________________________________________________________________________________________________________________", bold: true },
+    { text: 'About Me', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+    { text: "________________________________________________________________________________________________________________________________", bold: true },
     "\n",
     ...about,
     "\n",
-    { text: 'Educational Background', bold: true, lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "___________________________________________________________________________________________________________________", bold: true },
+    { text: 'Educational Background', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+    { text: "________________________________________________________________________________________________________________________________", bold: true },
     "\n",
     ...educations,
     "\n",
-    { text: 'Skills', bold: true, lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "___________________________________________________________________________________________________________________", bold: true },
+    { text: 'Skills', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+    { text: "________________________________________________________________________________________________________________________________", bold: true },
     "\n",
     ...Skills,
     "\n",
-    { text: 'Experiences', bold: true, lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "___________________________________________________________________________________________________________________", bold: true },
+    { text: 'Experiences', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+    { text: "________________________________________________________________________________________________________________________________", bold: true },
     "\n",
     ...resume
   ]

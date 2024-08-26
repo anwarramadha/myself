@@ -50,7 +50,8 @@ export class Biodata extends JsonFile {
       bold: true,
       fontSize: 14,
       lineHeight: 1.5,
-      alignment: 'center'
+      alignment: 'center',
+      color: '#000000'
     })
     result.push({
       columns: [

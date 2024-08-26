@@ -22,10 +22,33 @@ export class Education extends JsonFile {
       const endYear = item.attributes.end ? item.attributes.end : "Present";
       const gpa = item.attributes.gpa ? `GPA: ${item.attributes.gpa}/4.0` : "";
       result.push({
-        text: item.attributes.school,
-        bold: true,
-      });
-      result.push(`${item.attributes.major} (${item.attributes.start}-${endYear}) ${gpa}`);
+        columns: [
+          {
+            text: item.attributes.school,
+            fontSize: 10,
+          },
+          {
+            text: `${item.attributes.start} - ${endYear}`,
+            alignment: 'right',
+            lineHeight: 1.2,
+            fontSize: 10,
+          }
+        ]
+      })
+      result.push({
+        columns: [
+          {
+            text: item.attributes.major,
+            color: '#000000',
+            fontSize: 10,
+          },
+          {
+            text: gpa,
+            alignment: 'right',
+            fontSize: 10,
+          }
+        ]
+      })
       result.push("\n");
     });
     return result;
