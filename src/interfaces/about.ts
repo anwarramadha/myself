@@ -65,7 +65,7 @@ export class Biodata extends JsonFile {
           fontSize: 14,
           bold: true,
           alignment: 'center',
-          margin: [10, -2, 10, 0],
+          margin: [5, -2, 5, 0],
           width: 'auto'
         },
         {
