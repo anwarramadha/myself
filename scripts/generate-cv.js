@@ -41,7 +41,7 @@ const contents = [
   "\n",
 ]
 
-if (certifications) {
+if (certifications.length > 0) {
   contents.push(
     { text: 'Certifications / Courses', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
     { text: "________________________________________________________________________________________________________________________________", bold: true },
