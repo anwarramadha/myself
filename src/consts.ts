@@ -31,11 +31,21 @@ export const SEARCH: Page = {
   DESCRIPTION: "Search all posts and projects by keyword.",
 }
 
+// Certification Page
+export const CERTIFICATION: Page = {
+  TITLE: "Certifications",
+  DESCRIPTION: "Certifications I have earned.",
+}
+
 // Links
 export const LINKS: Links = [
   { 
     TEXT: "Home", 
     HREF: "/myself", 
+  },
+  {
+    TEXT: "Certifications",
+    HREF: "/myself/certifications",
   },
   { 
     TEXT: "Resume", 

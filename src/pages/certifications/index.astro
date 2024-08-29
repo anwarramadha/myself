@@ -1,0 +1,53 @@
+---
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import fetchApi from "@lib/strapi"
+import { type ICertification, Certification } from "@interfaces/certification"
+import { Markdown } from "@astropub/md"
+import { CERTIFICATION } from "@consts"
+
+const certifications = await fetchApi<ICertification[]>({
+  endpoint: "/certifications"
+})
+
+const certificationInstance = new Certification('data/certifications.json', certifications)
+
+certificationInstance.createJsonFileFromObject()
+
+function formatDate(input: string) {
+  const date = new Date(input)
+
+  return date.getFullYear()
+}
+---
+
+<PageLayout title={CERTIFICATION.TITLE} description={CERTIFICATION.DESCRIPTION}>
+  <TopLayout>
+    <div class="animate page-heading">
+      {CERTIFICATION.TITLE}
+    </div>
+  </TopLayout>
+  <BottomLayout>
+    <ul>
+      { 
+        certifications.map((entry: ICertification) => (
+          <li class="animate border-b border-black/10 dark:border-white/25 mt-4 py-8 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none">
+            <div class="text-sm uppercase mb-4">
+              {formatDate(entry.attributes.date)}
+            </div>
+            <div class="text-black dark:text-white font-semibold">
+              {entry.attributes.name}
+            </div>
+            <div class="text-sm font-semibold">
+              {entry.attributes.organizer}
+            </div>
+            <article class="prose dark:prose-invert">
+              <Markdown of={entry.attributes.description} />
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </BottomLayout>
+</PageLayout>

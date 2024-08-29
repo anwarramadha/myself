@@ -3,10 +3,12 @@ import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import tailwind from "@astrojs/tailwind"
 import solidJs from "@astrojs/solid-js"
+import dotenv from 'dotenv'
 
-// https://astro.build/config
+dotenv.config()
+
 export default defineConfig({
-  site: "https://anwarramadha.github.io",
-  base: "myself",
+  site: process.env.ASTRO_SITE_URL,
+  base: process.env.ASTRO_BASE_PATH,
   integrations: [mdx(), sitemap(), solidJs(), tailwind({ applyBaseStyles: false })],
 })

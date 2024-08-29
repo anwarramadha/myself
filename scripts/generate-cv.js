@@ -24,35 +24,56 @@ const about = readJsonFile("data/about.json")
 const resume = readJsonFile("data/resume.json")
 const educations = readJsonFile("data/education.json")
 const Skills = readJsonFile("data/skills.json")
+const certifications = readJsonFile("data/certifications.json")
+
+const contents = [
+  biodata,
+  "\n",
+  { text: 'About Me', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+  { text: "________________________________________________________________________________________________________________________________", bold: true },
+  "\n",
+  ...about,
+  "\n",
+  { text: 'Educational Background', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+  { text: "________________________________________________________________________________________________________________________________", bold: true },
+  "\n",
+  ...educations,
+  "\n",
+]
+
+if (certifications) {
+  contents.push(
+    { text: 'Certifications / Courses', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+    { text: "________________________________________________________________________________________________________________________________", bold: true },
+    "\n",
+    ...certifications,
+    "\n",
+  )
+}
+
+contents.push(
+  { text: 'Skills', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+  { text: "________________________________________________________________________________________________________________________________", bold: true },
+  "\n",
+  ...Skills,
+  "\n",
+)
+
+if (resume) {
+  contents.push(
+    { text: 'Experiences', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
+    { text: "________________________________________________________________________________________________________________________________", bold: true },
+    "\n",
+    ...resume
+  )
+}
 
 const docDefinition = {
   defaultStyle: {
     fontSize: 9,
     color: '#7f7f7f',
   },
-  content: [
-    biodata,
-    "\n",
-    { text: 'About Me', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "________________________________________________________________________________________________________________________________", bold: true },
-    "\n",
-    ...about,
-    "\n",
-    { text: 'Educational Background', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "________________________________________________________________________________________________________________________________", bold: true },
-    "\n",
-    ...educations,
-    "\n",
-    { text: 'Skills', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "________________________________________________________________________________________________________________________________", bold: true },
-    "\n",
-    ...Skills,
-    "\n",
-    { text: 'Experiences', color: '#000000', lineHeight: 0.5, alignment: 'center', fontSize: 11 },
-    { text: "________________________________________________________________________________________________________________________________", bold: true },
-    "\n",
-    ...resume
-  ]
+  content: contents,
 }
 
 var pdfDoc = printer.createPdfKitDocument(docDefinition, {});
