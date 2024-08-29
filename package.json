@@ -6,8 +6,9 @@
     "dev": "astro dev",
     "dev:network": "astro dev --host",
     "start": "astro dev",
-    "build": "astro check && astro build && npm run generate-cv",
+    "build": "astro check && astro build && npm run generate-cv && npm run post-build",
     "generate-cv": "node scripts/generate-cv.js",
+    "post-build": "node scripts/post-build.js",
     "preview": "astro preview",
     "preview:network": "astro dev --host",
     "astro": "astro",
@@ -32,5 +33,9 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5"
   }
 }

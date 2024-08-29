@@ -21,6 +21,8 @@ env:
   GH_EMAIL: ${{ secrets.GH_EMAIL }}
   STRAPI_URL: ${{ secrets.STRAPI_URL }}
   STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
+  ASTRO_SITE_URL: ${{ secrets.ASTRO_SITE_URL }}
+  ASTRO_BASE_PATH: ${{ secrets.ASTRO_BASE_PATH }}
 jobs:
   build:
     runs-on: ubuntu-latest

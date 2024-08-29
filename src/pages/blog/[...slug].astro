@@ -7,19 +7,25 @@ import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
 import fetchApi from "@lib/strapi"
 import type Post from "@interfaces/post"
 import { generatePrevAndNextPost } from "@lib/post"
+import { Md } from "@lib/md"
 
 // Create the static blog pages
 export async function getStaticPaths() {
   const posts = await fetchApi<Post[]>({
     endpoint: `/posts?populate=deep`
   })
-  return posts.map((post) => ({
-		params: { slug: post.attributes.slug },
-		props: {
-      post,
-      ...generatePrevAndNextPost(posts, post.attributes.slug)
-    },
-	}))
+  return posts.map((post) => {
+    const md = new Md(post.attributes.article.content)
+    md.downloadUrlAndReplaceUrls()
+    post.attributes.article.content = md.text
+    return {
+      params: { slug: post.attributes.slug },
+      props: {
+        post,
+        ...generatePrevAndNextPost(posts, post.attributes.slug)
+      },
+    }
+	})
 }
 
 // Get the requested post
