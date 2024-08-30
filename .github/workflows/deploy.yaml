@@ -23,9 +23,6 @@ env:
   STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
   ASTRO_SITE_URL: ${{ secrets.ASTRO_SITE_URL }}
   ASTRO_BASE_PATH: ${{ secrets.ASTRO_BASE_PATH }}
-  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-  CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,28 +38,12 @@ jobs:
           # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    name: Deploy to Cloudflare Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          directory: dist
-    # needs: build
-    # runs-on: ubuntu-latest
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.deployment.outputs.page_url }}
-    # steps:
-    #   - name: Deploy to GitHub Pages
-    #     id: deployment
-    #     uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
