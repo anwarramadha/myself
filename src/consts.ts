@@ -37,27 +37,29 @@ export const CERTIFICATION: Page = {
   DESCRIPTION: "Certifications I have earned.",
 }
 
+export const BASE_URL = `${import.meta.env.SITE}${import.meta.env.BASE_URL}`.replace(/\/$/, '')
+
 // Links
 export const LINKS: Links = [
   { 
     TEXT: "Home", 
-    HREF: "/myself", 
+    HREF: `${BASE_URL}`, 
   },
   {
     TEXT: "Certifications",
-    HREF: "/myself/certifications",
+    HREF: `${BASE_URL}/certifications`,
   },
   { 
     TEXT: "Resume", 
-    HREF: "/myself/resume", 
+    HREF: `${BASE_URL}/resume`, 
   },
   { 
     TEXT: "Blog", 
-    HREF: "/myself/blog", 
+    HREF: `${BASE_URL}/blog`, 
   },
   { 
     TEXT: "Projects", 
-    HREF: "/myself/projects", 
+    HREF: `${BASE_URL}/projects`, 
   },
 ]
 

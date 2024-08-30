@@ -1,4 +1,5 @@
 import { download } from "./utils";
+import { BASE_URL } from "@consts";
 
 export class Md {
   text: string;
@@ -22,8 +23,7 @@ export class Md {
         const urlInstance = new URL(url);
         download(urlInstance.pathname);
         // if file is downloaded, replace the url with the local path
-        const host = import.meta.env.ASTRO_SITE_URL;
-        this.text = this.text.replace(url, `${host}/${process.env.ASTRO_BASE_PATH}/uploads/${url.split("/").pop()}`);
+        this.text = this.text.replace(url, `${BASE_URL}/uploads/${url.split("/").pop()}`);
       } catch (error) {
         console.error(error);
       }

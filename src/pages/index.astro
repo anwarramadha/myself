@@ -16,7 +16,7 @@ import type Stack from "@interfaces/stack"
 import type Social from "@interfaces/social"
 import { type IEducation } from "@interfaces/education"
 import { Education } from "@interfaces/education"
-import { POST_TYPE_ENUM } from "@consts"
+import { POST_TYPE_ENUM, BASE_URL } from "@consts"
 import { Markdown } from "@astropub/md"
 
 const about = await fetchApi<IAbout>({
@@ -95,7 +95,7 @@ const socials = await fetchApi<Social[]>({
     </div>
   </div>
 
-  <script is:inline src="/myself/js/bg.js"></script>
+  <script is:inline src=`${BASE_URL}/js/bg.js`></script>
   
   <!-- HERO -->
   <section class="relative h-screen w-full">
@@ -119,10 +119,10 @@ const socials = await fetchApi<Social[]>({
             {about.attributes.expertise}
           </p>
           <div id="ctaButtons" class='animated flex flex-wrap gap-4 justify-center mt-5'>
-            <a href={ about?.attributes?.cv?.data?.attributes?.url || '/myself/cv.pdf' } target="_blank" class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
+            <a href={ about?.attributes?.cv?.data?.attributes?.url || `${BASE_URL}/cv.pdf` } target="_blank" class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
               Download my CV
             </a>
-            <a href='/myself/resume' class='py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend'>
+            <a href=`${BASE_URL}/resume` class='py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend'>
               View my resume
             </a>
           </div>
@@ -160,7 +160,7 @@ const socials = await fetchApi<Social[]>({
             <p class="font-semibold text-black dark:text-white">
               Recent posts
             </p>
-            <a href="/myself/blog" class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
+            <a href=`${BASE_URL}/blog` class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
               <span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
                 All posts
               </span>
@@ -201,7 +201,7 @@ const socials = await fetchApi<Social[]>({
             <p class="font-semibold text-black dark:text-white">
               Recent projects
             </p>
-            <a href="/myself/projects" class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
+            <a href=`${BASE_URL}/projects` class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
               <span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
                 All projects
               </span>

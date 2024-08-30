@@ -1,5 +1,5 @@
 ---
-import { SITE } from "@consts"
+import { SITE, BASE_URL } from "@consts"
 import Container from "@components/Container.astro"
 import fetchApi from "@lib/strapi"
 import type Social from "@interfaces/social"
@@ -77,7 +77,7 @@ const socials = await fetchApi<Social[]>({
                     class="group size-10 rounded-full p-2 items-center justify-center hover:bg-black/5 dark:hover:bg-white/20  blend"
                   >
                     <svg class="size-full fill-current group-hover:fill-black group-hover:dark:fill-white blend">
-                      <use href={`/myself/social.svg#${SOCIAL.attributes.icon}`} />
+                      <use href={`${BASE_URL}/social.svg#${SOCIAL.attributes.icon}`} />
                     </svg>
                   </a>
                 ))

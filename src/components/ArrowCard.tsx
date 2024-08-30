@@ -1,7 +1,7 @@
 import { formatDate } from "@lib/utils"
 import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
-import { POST_TYPE_ENUM } from "@consts"
+import { POST_TYPE_ENUM, BASE_URL } from "@consts"
 
 type Props = {
   // entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
@@ -12,7 +12,7 @@ type Props = {
 
 export default function ArrowCard({entry, pill, collection=POST_TYPE_ENUM.POST}: Props) {
     return (
-      <a href={`/myself/${collection}/${entry.attributes.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-black/5 hover:dark:bg-white/10 border-black/15 dark:border-white/20 transition-colors duration-300 ease-in-out">
+      <a href={`${BASE_URL}/${collection}/${entry.attributes.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-black/5 hover:dark:bg-white/10 border-black/15 dark:border-white/20 transition-colors duration-300 ease-in-out">
       <div class="w-full group-hover:text-black group-hover:dark:text-white blend">
         <div class="flex flex-wrap items-center gap-2">
           {pill &&
