@@ -1,5 +1,6 @@
 ---
 import { download } from '@lib/utils'
+import { BASE_URL } from '@consts'
 
 type Props = {
   icon: string
@@ -13,5 +14,5 @@ await download(icon)
 ---
 
 <a href={href} target="_blank" class="px-3 py-2 group rounded border flex gap-2 items-center border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 hover:dark:bg-neutral-800 blend w-14 h-14">
-  <img src={`/${import.meta.env.ASTRO_BASE_PATH}${icon}`} alt="" width="30" class="m-auto">
+  <img src={`${BASE_URL}${icon}`} alt="" width="30" class="m-auto">
 </a>

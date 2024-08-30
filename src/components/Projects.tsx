@@ -1,7 +1,7 @@
 import { createEffect, createSignal, For } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
 import type Project from "@interfaces/project"
-import { POST_TYPE_ENUM } from "@consts"
+import { POST_TYPE_ENUM, BASE_URL } from "@consts"
 import { cn } from "@lib/utils"
 
 type Props = {
@@ -46,8 +46,8 @@ export default function Projects({ data, tags }: Props) {
                 <li>
                   <button onClick={() => toggleTag(tag)} class={cn("w-full px-2 py-1 rounded", "whitespace-nowrap overflow-hidden overflow-ellipsis", "flex gap-2 items-center", "bg-black/5 dark:bg-white/10", "hover:bg-black/10 hover:dark:bg-white/15", "transition-colors duration-300 ease-in-out", filter().has(tag) && "text-black dark:text-white")}>
                     <svg class={cn("size-5 fill-black/50 dark:fill-white/50", "transition-colors duration-300 ease-in-out", filter().has(tag) && "fill-black dark:fill-white")}>
-                      <use href={`/myself/ui.svg#square`} class={cn(!filter().has(tag) ? "block" : "hidden")} />
-                      <use href={`/myself/ui.svg#square-check`} class={cn(filter().has(tag) ? "block" : "hidden")} />
+                      <use href={`${BASE_URL}/ui.svg#square`} class={cn(!filter().has(tag) ? "block" : "hidden")} />
+                      <use href={`${BASE_URL}/ui.svg#square-check`} class={cn(filter().has(tag) ? "block" : "hidden")} />
                     </svg>
                     {tag}
                   </button>

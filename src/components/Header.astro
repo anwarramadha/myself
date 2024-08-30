@@ -1,5 +1,5 @@
 ---
-import { LINKS } from "@consts"
+import { LINKS, BASE_URL } from "@consts"
 import { cn } from "@lib/utils"
 let { pathname } = Astro.url
 pathname = pathname.replace(/\/$/, "")
@@ -19,9 +19,9 @@ const { title } = Astro.props
   <Container size="md">
     <div class="relative h-full w-full">
       <div class="absolute left-0 top-1/2 -translate-y-1/2 flex gap-1 font-semibold">
-        <a href="/myself" class="flex gap-1 text-current hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
+        <a href=`${BASE_URL}` class="flex gap-1 text-current hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
           <svg class="size-6 fill-current">
-            <use href="/myself/brand.svg#brand"></use>
+            <use href=`${BASE_URL}/brand.svg#brand`></use>
           </svg>
           <div>
             {title}
@@ -42,9 +42,9 @@ const { title } = Astro.props
     </div>
 
     <div class="buttons absolute right-0 top-1/2 -translate-y-1/2 flex gap-1">
-      <a href="/myself/search" aria-label={`Search blog posts and projects on ${title}`} class={cn("hidden md:flex", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-black/5 dark:hover:bg-white/20", "stroke-current hover:stroke-black hover:dark:stroke-white", "border border-black/10 dark:border-white/25", "transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "/search" ? "pointer-events-none bg-black dark:bg-white text-white dark:text-black" : "")}>
+      <a href=`${BASE_URL}/search` aria-label={`Search blog posts and projects on ${title}`} class={cn("hidden md:flex", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-black/5 dark:hover:bg-white/20", "stroke-current hover:stroke-black hover:dark:stroke-white", "border border-black/10 dark:border-white/25", "transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "/search" ? "pointer-events-none bg-black dark:bg-white text-white dark:text-black" : "")}>
         <svg class="size-full">
-          <use href="/myself/ui.svg#search"></use>
+          <use href=`${BASE_URL}/ui.svg#search`></use>
         </svg>
       </a>
 
@@ -56,19 +56,19 @@ const { title } = Astro.props
 
       <button id="header-theme-button" aria-label={`Toggle light and dark theme`} class={cn("hidden md:flex", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-black/5 dark:hover:bg-white/20", "stroke-current hover:stroke-black hover:dark:stroke-white", "border border-black/10 dark:border-white/25", "transition-colors duration-300 ease-in-out")}>
         <svg class="size-full block dark:hidden">
-          <use href="/myself/ui.svg#sun"></use>
+          <use href=`${BASE_URL}/ui.svg#sun`></use>
         </svg>
         <svg class="size-full hidden dark:block">
-          <use href="/myself/ui.svg#moon"></use>
+          <use href=`${BASE_URL}/ui.svg#moon`></use>
         </svg>
       </button>
 
       <button id="header-drawer-button" aria-label={`Toggle drawer open and closed`} class={cn("flex md:hidden", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-black/5 dark:hover:bg-white/20", "stroke-current hover:stroke-black hover:dark:stroke-white", "border border-black/10 dark:border-white/25", "transition-colors duration-300 ease-in-out")}>
         <svg id="drawer-open" class="size-full">
-          <use href="/myself/ui.svg#menu"></use>
+          <use href=`${BASE_URL}/ui.svg#menu`></use>
         </svg>
         <svg id="drawer-close" class="size-full">
-          <use href="/myself/ui.svg#x"></use>
+          <use href=`${BASE_URL}/ui.svg#x`></use>
         </svg>
       </button>
     </div>
