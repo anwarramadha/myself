@@ -8,6 +8,7 @@ import type siteInfo from "@interfaces/siteInfo"
 import fetchApi from "@lib/strapi"
 const { title, description } = Astro.props
 import { SITE } from "@consts"
+import { download } from "@lib/utils"
 
 const siteInfo = await fetchApi<siteInfo>({
   endpoint: "/site-info?populate=image"
@@ -16,6 +17,10 @@ const siteInfo = await fetchApi<siteInfo>({
 const siteTitle = siteInfo?.attributes?.title || SITE.TITLE
 const siteDescription = siteInfo?.attributes?.description || description
 const image = siteInfo?.attributes?.image?.data?.attributes?.url || "/open-graph.jpg"
+
+if (siteInfo?.attributes?.image?.data?.attributes?.url) {
+  download(siteInfo?.attributes?.image?.data?.attributes?.url)
+}
 ---
 
 <!doctype html>
