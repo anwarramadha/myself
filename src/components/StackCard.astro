@@ -1,18 +1,22 @@
 ---
+import Icon from '@components/Icon'
+import { type IIcon } from '@interfaces/icon'
 import { download } from '@lib/utils'
-import { BASE_URL } from '@consts'
 
 type Props = {
-  icon: string
+  icon: IIcon
   href: string
+  name: string
 }
 
-const { icon, href } = Astro.props
+const { icon, href, name } = Astro.props
 
-// Download the icon
-await download(icon)
+await download(icon?.icon?.data?.attributes?.url)
+await download(icon?.darkIcon?.data?.attributes?.url)
 ---
 
 <a href={href} target="_blank" class="px-3 py-2 group rounded border flex gap-2 items-center border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 hover:dark:bg-neutral-800 blend w-14 h-14">
-  <img src={`${BASE_URL}${icon}`} alt="" width="30" class="m-auto">
+  <span class="m-auto">
+    <Icon icon={icon} width="30" name={name} />
+  </span>
 </a>

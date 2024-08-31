@@ -4,6 +4,12 @@ import Container from "@components/Container.astro"
 import fetchApi from "@lib/strapi"
 import type Social from "@interfaces/social"
 
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+
 const socials = await fetchApi<Social[]>({
   endpoint: "/socials"
 })
@@ -31,11 +37,11 @@ const socials = await fetchApi<Social[]>({
       <Container size="md">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="flex flex-col items-center sm:items-start">
-            <a href="/" class="flex gap-1 w-fit font-semibold text-current hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
+            <a href=`${BASE_URL}` class="flex gap-1 w-fit font-semibold text-current hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
               <svg class="size-6 fill-current">
-                <use href="/brand.svg#brand"/>
+                <use href=`${BASE_URL}/brand.svg#brand`></use>
               </svg>
-              {SITE.TITLE}
+              {title}
             </a>
           </div>
           <div class="flex gap-2 justify-center sm:justify-end items-center">

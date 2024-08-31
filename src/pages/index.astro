@@ -58,7 +58,7 @@ type Stacks = [
   }
 ]
 const stacks = await fetchApi<Stacks>({
-  endpoint: "/stacks?populate=icon"
+  endpoint: "/stacks?populate=deep"
 })
 const recentPosts = await fetchApi<Post[]>({
   endpoint: "/posts?_sort=date:desc&_limit=3&populate=article&populate=article.tags&populate=article.stacks"
@@ -131,8 +131,9 @@ const socials = await fetchApi<Social[]>({
               <div class="flex flex-wrap items-center justify-center gap-2 mt-5 max-w-[20rem] md:max-w-[30rem]">
                 {stacks.map(item => (
                   <StackCard
-                    icon={item.attributes.icon.data?.attributes?.formats?.thumbnail?.url}
+                    icon={item.attributes.icon}
                     href={item.attributes.url}
+                    name={item.attributes.name}
                   />
                 ))}
               </div>
@@ -186,8 +187,9 @@ const socials = await fetchApi<Social[]>({
             {portfolioStack.attributes.stacks.data.map(item => (
               <PortfolioStackCard 
                 text={item.attributes.name}
-                icon={item.attributes.icon.data.attributes.formats.thumbnail.url}
+                icon={item.attributes.icon}
                 href={item.attributes.url}
+                name={item.attributes.name}
               />
             ))}
           </div>

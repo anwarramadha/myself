@@ -1,6 +1,6 @@
-import type Image from "./image/image";
+import { type IIcon } from "./icon";
 export default interface Stack {
-  icon: Image;
+  icon: IIcon;
   name: string;
   url: string;
 }
