@@ -10,17 +10,18 @@ const { title, description } = Astro.props
 import { SITE } from "@consts"
 
 const siteInfo = await fetchApi<siteInfo>({
-  endpoint: "/site-info"
+  endpoint: "/site-info?populate=image"
 })
 
 const siteTitle = siteInfo?.attributes?.title || SITE.TITLE
 const siteDescription = siteInfo?.attributes?.description || description
+const image = siteInfo?.attributes?.image?.data?.attributes?.url || "/open-graph.jpg"
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`${title} | ${siteTitle}`} description={siteDescription} />
+    <BaseHead title={`${title} | ${siteTitle}`} description={siteDescription} image={image} />
   </head>
   <body>
     <Header title={siteTitle} />
@@ -28,6 +29,6 @@ const siteDescription = siteInfo?.attributes?.description || description
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer title={siteTitle} />
   </body>
 </html>
