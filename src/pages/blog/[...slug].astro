@@ -8,12 +8,18 @@ import fetchApi from "@lib/strapi"
 import type Post from "@interfaces/post"
 import { generatePrevAndNextPost } from "@lib/post"
 import { Md } from "@lib/md"
+import { download } from "@lib/utils"
 
 // Create the static blog pages
 export async function getStaticPaths() {
   const posts = await fetchApi<Post[]>({
     endpoint: `/posts?populate=deep`
   })
+
+  posts.forEach(async (post) => {
+    await download(post.attributes.article.heroImage.data?.attributes?.url)
+  })
+
   return posts.map((post) => {
     const md = new Md(post.attributes.article.content)
     md.downloadUrlAndReplaceUrls()
@@ -31,11 +37,11 @@ export async function getStaticPaths() {
 // Get the requested post
 const { post, next, prev } = Astro.props
 const { title } = post.attributes
-const { summary } = post.attributes.article
+const { summary, heroImage } = post.attributes.article
 const collection = "blog"
 ---
 
-<PageLayout title={title} description={summary}>
+<PageLayout title={title} description={summary} image={heroImage.data?.attributes?.url}>
   <TopLayout>
     <div class="animate">
       <ArticleTopLayout entry={post} collection={collection} />
