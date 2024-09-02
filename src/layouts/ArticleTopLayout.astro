@@ -42,12 +42,14 @@ if (collection === "projects") {
       </svg>
       {formatDate(new Date(createdAt))}
     </div>
-    <div class="flex items-center gap-2">
-      <svg class="size-5 stroke-current">
-        <use href=`${BASE_URL}/ui.svg#book-open`/>
-      </svg>
-      <!-- {readingTime(body)} -->
-    </div>
+    {(entry.attributes.article.readingTime) &&
+      <div class="flex items-center gap-2">
+        <svg class="size-5 stroke-current">
+          <use href=`${BASE_URL}/ui.svg#book-open`/>
+        </svg>
+        {entry.attributes.article.readingTime} minutes read
+      </div>
+    }
   </div>
   <h1 class="text-3xl font-semibold text-black dark:text-white mt-2">
     {title}

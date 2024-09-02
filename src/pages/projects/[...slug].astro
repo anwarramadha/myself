@@ -8,15 +8,23 @@ import fetchApi from "@lib/strapi"
 import type Project from "@interfaces/project"
 import { generatePrevAndNextPost } from "@lib/post"
 import { Md } from "@lib/md"
+import { download } from "@lib/utils"
 
 // Create the static projects pages
 export async function getStaticPaths() {
   const projects = await fetchApi<Project[]>({
     endpoint: `/projects?populate=deep`
   })
+  
+  projects.forEach(async (project) => {
+    await download(project.attributes.article.heroImage.data?.attributes?.url)
+  })
+
   return projects.map((project) => {
     const md = new Md(project.attributes.article.content)
     md.downloadUrlAndReplaceUrls()
+    // download hero image
+    // await download(project.attributes.article.heroImage.data.attributes.url)
     project.attributes.article.content = md.text
     return {
       params: { slug: project.attributes.slug },
@@ -31,11 +39,11 @@ export async function getStaticPaths() {
 // Get the requested project
 const { project, next, prev } = Astro.props
 const { title } = project.attributes
-const { summary } = project.attributes.article
+const { summary, heroImage } = project.attributes.article
 const collection = "projects"
 ---
 
-<PageLayout title={title} description={summary}>
+<PageLayout title={title} description={summary} image={heroImage.data?.attributes?.url}>
   <TopLayout>
     <div class="animate">
       <ArticleTopLayout entry={project} collection={collection} />

@@ -6,9 +6,10 @@ import Footer from "@components/Footer.astro"
 import Drawer from "@components/Drawer.astro"
 import type siteInfo from "@interfaces/siteInfo"
 import fetchApi from "@lib/strapi"
-const { title, description } = Astro.props
 import { SITE } from "@consts"
 import { download } from "@lib/utils"
+
+const { title, description, image } = Astro.props
 
 const siteInfo = await fetchApi<siteInfo>({
   endpoint: "/site-info?populate=image"
@@ -16,17 +17,19 @@ const siteInfo = await fetchApi<siteInfo>({
 
 const siteTitle = siteInfo?.attributes?.title || SITE.TITLE
 const siteDescription = siteInfo?.attributes?.description || description
-const image = siteInfo?.attributes?.image?.data?.attributes?.url || "/open-graph.jpg"
+const headerImage = image || siteInfo?.attributes?.image?.data?.attributes?.url || "/open-graph.jpg"
 
 if (siteInfo?.attributes?.image?.data?.attributes?.url) {
   download(siteInfo?.attributes?.image?.data?.attributes?.url)
+} else if (image) {
+  download(image)
 }
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`${title} | ${siteTitle}`} description={siteDescription} image={image} />
+    <BaseHead title={`${title} | ${siteTitle}`} description={siteDescription} image={headerImage} />
   </head>
   <body>
     <Header title={siteTitle} />

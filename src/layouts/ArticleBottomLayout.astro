@@ -20,7 +20,11 @@ const { content } = article
 ---
 
 <div>
-  <article>
+  {
+    (article.heroImage.data?.attributes?.url) && 
+    <img src={`${BASE_URL}/${article.heroImage.data.attributes.url}`} alt="">
+  }
+  <article class="mt-2">
     <Markdown.Inline of={content} />
   </article>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
