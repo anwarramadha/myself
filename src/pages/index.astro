@@ -3,7 +3,6 @@ import PageLayout from "@layouts/PageLayout.astro"
 import ArrowCard from "@components/ArrowCard"
 import PortfolioStackCard from "@components/PortfolioStackCard.astro"
 import StackCard from "@components/StackCard.astro"
-import { SITE } from "@consts"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import fetchApi from "@lib/strapi"
@@ -71,7 +70,7 @@ const socials = await fetchApi<Social[]>({
 })
 ---
 
-<PageLayout title="Home" description={SITE.DESCRIPTION}>
+<PageLayout title="Home">
 
   <!-- Light Mode: Particles -->
   <div class='absolute inset-0 block dark:hidden'>

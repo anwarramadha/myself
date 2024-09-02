@@ -16,7 +16,7 @@ const siteInfo = await fetchApi<siteInfo>({
 })
 
 const siteTitle = siteInfo?.attributes?.title || SITE.TITLE
-const siteDescription = siteInfo?.attributes?.description || description
+const siteDescription = description || siteInfo?.attributes?.description
 const headerImage = image || siteInfo?.attributes?.image?.data?.attributes?.url || "/open-graph.jpg"
 
 if (siteInfo?.attributes?.image?.data?.attributes?.url) {
