@@ -8,7 +8,6 @@ import MeteorShower from "@components/MeteorShower.astro"
 import fetchApi from "@lib/strapi"
 import { type IAbout } from "@interfaces/about"
 import { About, Biodata, Skills } from "@interfaces/about"
-import type PortfolioStack from "@interfaces/portfolioStack"
 import type Post from "@interfaces/post"
 import type Project from "@interfaces/project"
 import type Stack from "@interfaces/stack"
@@ -47,9 +46,28 @@ const education = await fetchApi<IEducation[]>({
 const educationInstance = new Education('data/education.json', education)
 educationInstance.createJsonFileFromObject()
 
-const portfolioStack = await fetchApi<PortfolioStack>({
-  endpoint: "/portfolio-stack?populate=deep"
-})
+const portfolioStack = [
+  { 
+    text: "Astro", 
+    icon: "/astro.png", 
+    href: "https://astro.build" 
+  },
+  { 
+    text: "Typescript", 
+    icon: "/typescript.png", 
+    href: "https://www.typescriptlang.org" 
+  },
+  { 
+    text: "Tailwind", 
+    icon: "/tailwind.png", 
+    href: "https://tailwindcss.com" 
+  },
+  { 
+    text: "Strapi", 
+    icon: "/strapi.png", 
+    href: "https://strapi.io" 
+  },
+]
 type Stacks = [
   {
     id: number
@@ -68,6 +86,7 @@ const recentProjects = await fetchApi<Project[]>({
 const socials = await fetchApi<Social[]>({
   endpoint: "/socials"
 })
+
 ---
 
 <PageLayout title="Home">
@@ -182,11 +201,11 @@ const socials = await fetchApi<Social[]>({
             Website build with
           </p>
           <div class="flex flex-wrap items-center gap-2 mt-5">
-            {portfolioStack.attributes.stacks.data.map(item => (
+            {portfolioStack.map(item => (
               <PortfolioStackCard 
-                text={item.attributes.name}
-                icon={item.attributes.icon.data.attributes.formats.thumbnail.url}
-                href={item.attributes.url}
+                text={item.text}
+                icon={item.icon}
+                href={item.href}
               />
             ))}
           </div>
